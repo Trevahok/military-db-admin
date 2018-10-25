@@ -1,0 +1,16 @@
+CREATE TABLE soldier( soldier_id INT NOT NULL,firstname VARCHAR(100) NOT NULL,lastname VARCHAR(100) NOT NULL,weight INT NOT NULL,height INT NOT NULL,rank VARCHAR(100) NOT NULL,bloodtype VARCHAR(100) NOT NULL,recruitmentdate DATE NOT NULL,personal_number INT NOT NULL,instructor_id INT NOT NULL,PRIMARY KEY (soldier_id),FOREIGN KEY (instructor_id) REFERENCES division(div_id));
+
+
+CREATE TABLE barracks( b_id INT NOT NULL, name VARCHAR(100) NOT NULL, incharge VARCHAR(100) NOT NULL, capacity INT NOT NULL, Location VARCHAR(100) NOT NULL, officer_id INT NOT NULL, PRIMARY KEY (b_id), FOREIGN KEY (officer_id) REFERENCES officer(officer_id)); 
+CREATE TABLE equipment_maintenance( incharge VARCHAR(100) NOT NULL, serial_no INT NOT NULL, officer_id INT NOT NULL, PRIMARY KEY (serial_no, officer_id), FOREIGN KEY (serial_no) REFERENCES equipment(serial_no), FOREIGN KEY (officer_id) REFERENCES engineer(officer_id) );
+
+
+CREATE TABLE course( course_id INT NOT NULL, training_name VARCHAR(100) NOT NULL, starting_date DATE NOT NULL, ending_date DATE NOT NULL, officer_personal_number INT NOT NULL, officer_id INT NOT NULL, PRIMARY KEY (course_id), FOREIGN KEY (officer_id) REFERENCES officer(officer_id));
+
+CREATE TABLE soldier_in_barrack( soldier_id INT NOT NULL, b_id INT NOT NULL, FOREIGN KEY (soldier_id) REFERENCES soldier(soldier_id), FOREIGN KEY (b_id) REFERENCES barracks(b_id));
+
+
+CREATE TABLE barrack_maintainer( emp_id INT NOT NULL, b_id INT NOT NULL, FOREIGN KEY (emp_id) REFERENCES maintainer(emp_id), FOREIGN KEY (b_id) REFERENCES barracks(b_id));
+
+CREATE TABLE soldiers_courses( course_id INT NOT NULL, soldier_id INT NOT NULL, PRIMARY KEY (course_id, soldier_id), FOREIGN KEY (course_id) REFERENCES course(course_id), FOREIGN KEY (soldier_id) REFERENCES soldier(soldier_id));
+
