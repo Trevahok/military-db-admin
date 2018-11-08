@@ -96,6 +96,7 @@ CREATE TABLE `barrack_maintainer` (
 
 LOCK TABLES `barrack_maintainer` WRITE;
 /*!40000 ALTER TABLE `barrack_maintainer` DISABLE KEYS */;
+INSERT INTO `barrack_maintainer` VALUES (1,1),(2,3),(3,7),(4,8),(5,9);
 /*!40000 ALTER TABLE `barrack_maintainer` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -109,7 +110,6 @@ DROP TABLE IF EXISTS `barracks`;
 CREATE TABLE `barracks` (
   `b_id` int(11) NOT NULL,
   `name` varchar(100) NOT NULL,
-  `incharge` varchar(100) NOT NULL,
   `capacity` int(11) NOT NULL,
   `Location` varchar(100) NOT NULL,
   `officer_id` int(11) NOT NULL,
@@ -125,6 +125,7 @@ CREATE TABLE `barracks` (
 
 LOCK TABLES `barracks` WRITE;
 /*!40000 ALTER TABLE `barracks` DISABLE KEYS */;
+INSERT INTO `barracks` VALUES (1,'kimmy carasian ',5,'sokovia',101),(3,'lex luthor ',5,'metropolis',102),(7,'tchalla  ',5,'wakanda',102),(8,'neville dickinson ',5,'wales',103),(9,'marshall mathers ',5,'metropolis',104);
 /*!40000 ALTER TABLE `barracks` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -234,7 +235,7 @@ CREATE TABLE `equipment` (
 
 LOCK TABLES `equipment` WRITE;
 /*!40000 ALTER TABLE `equipment` DISABLE KEYS */;
-INSERT INTO `equipment` VALUES (1,2,'YES','GUN'),(2,4,'YES','GUN'),(3,3,'YES','GUN'),(4,7,'YES','GUN'),(5,1,'YES','GUN');
+INSERT INTO `equipment` VALUES (1,2,'YES','GUN'),(2,4,'YES','GUN'),(3,3,'YES','GUN'),(4,7,'YES','GUN'),(5,1,'YES','GUN'),(6,5,'YES ','GUN');
 /*!40000 ALTER TABLE `equipment` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -246,7 +247,6 @@ DROP TABLE IF EXISTS `equipment_maintenance`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
  SET character_set_client = utf8mb4 ;
 CREATE TABLE `equipment_maintenance` (
-  `incharge` varchar(100) NOT NULL,
   `serial_no` int(11) NOT NULL,
   `officer_id` int(11) NOT NULL,
   PRIMARY KEY (`serial_no`,`officer_id`),
@@ -262,7 +262,7 @@ CREATE TABLE `equipment_maintenance` (
 
 LOCK TABLES `equipment_maintenance` WRITE;
 /*!40000 ALTER TABLE `equipment_maintenance` DISABLE KEYS */;
-INSERT INTO `equipment_maintenance` VALUES ('JOHN',1,101),('PANTHER',2,102),('RICHARD',3,103),('STEPHAN',4,104),('MANUEL',5,105);
+INSERT INTO `equipment_maintenance` VALUES (1,101),(2,102),(3,103),(4,104),(5,105);
 /*!40000 ALTER TABLE `equipment_maintenance` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -367,8 +367,11 @@ CREATE TABLE `soldier` (
   `recruitmentdate` varchar(20) NOT NULL,
   `personal_number` int(11) NOT NULL,
   `instructor_id` int(11) NOT NULL,
+  `b_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`soldier_id`),
   KEY `instructor_id` (`instructor_id`),
+  KEY `fkb` (`b_id`),
+  CONSTRAINT `fkb` FOREIGN KEY (`b_id`) REFERENCES `barracks` (`b_id`),
   CONSTRAINT `soldier_ibfk_1` FOREIGN KEY (`instructor_id`) REFERENCES `division` (`div_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -379,34 +382,8 @@ CREATE TABLE `soldier` (
 
 LOCK TABLES `soldier` WRITE;
 /*!40000 ALTER TABLE `soldier` DISABLE KEYS */;
-INSERT INTO `soldier` VALUES (1,'Tom B. Erichsen','Skagen',30,46,'Commander','B+','01/02/2008',62,4456),(2,'Sam','sung',23,42,'Lieutenant','A+','03/05/2009',32,5432),(3,'Brad','pitt',46,52,'General','O+','02/04/2006',34,6666),(4,'Pitt','Bull',69,82,'Major','O+','23/01/2007',41,6969),(5,'Bruce','Wayne',99,99,'Captain','B+','27/05/2016',36,3666);
+INSERT INTO `soldier` VALUES (1,'Tom B. Erichsen','Skagen',30,46,'Commander','B+','01/02/2008',62,4456,1),(2,'Sam','sung',23,42,'Lieutenant','A+','03/05/2009',32,5432,3),(3,'Brad','pitt',46,52,'General','O+','02/04/2006',34,6666,7),(4,'Pitt','Bull',69,82,'Major','O+','23/01/2007',41,6969,8),(5,'Bruce','Wayne',99,99,'Captain','B+','27/05/2016',36,3666,9);
 /*!40000 ALTER TABLE `soldier` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `soldier_in_barrack`
---
-
-DROP TABLE IF EXISTS `soldier_in_barrack`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
- SET character_set_client = utf8mb4 ;
-CREATE TABLE `soldier_in_barrack` (
-  `soldier_id` int(11) NOT NULL,
-  `b_id` int(11) NOT NULL,
-  KEY `soldier_id` (`soldier_id`),
-  KEY `b_id` (`b_id`),
-  CONSTRAINT `soldier_in_barrack_ibfk_1` FOREIGN KEY (`soldier_id`) REFERENCES `soldier` (`soldier_id`),
-  CONSTRAINT `soldier_in_barrack_ibfk_2` FOREIGN KEY (`b_id`) REFERENCES `barracks` (`b_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `soldier_in_barrack`
---
-
-LOCK TABLES `soldier_in_barrack` WRITE;
-/*!40000 ALTER TABLE `soldier_in_barrack` DISABLE KEYS */;
-/*!40000 ALTER TABLE `soldier_in_barrack` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -491,7 +468,7 @@ CREATE TABLE `weapon` (
 
 LOCK TABLES `weapon` WRITE;
 /*!40000 ALTER TABLE `weapon` DISABLE KEYS */;
-INSERT INTO `weapon` VALUES ('AK47','RIFLE',3,600,36,1),('M4A4','RIFLE',2,650,31,2),('MP7','SUBMACHINE',2,700,25,3),('M249','HEAVY',6,800,40,4),('P250','PISTOL',2,400,15,5);
+INSERT INTO `weapon` VALUES ('AK47','RIFLE',3,600,36,1),('M4A4','RIFLE',2,650,31,2),('MP7','SUBMACHINE',2,700,25,3),('M249','HEAVY',6,800,40,4),('P250','PISTOL',2,400,15,5),('awm','sniper ',5,100,100,6);
 /*!40000 ALTER TABLE `weapon` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -504,4 +481,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-10-27  9:07:20
+-- Dump completed on 2018-11-08 14:32:51

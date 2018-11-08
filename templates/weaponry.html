@@ -11,20 +11,20 @@
                     <div class=" w3-padding">
                         <h6 class="w3-opacity">Add new weapon </h6>
                         <form action="" method="post">
-                            <label class='w3-half w3-small'>SNo.</label>
-                            <input class="w3-border w3-input" type='text' name='serial_no'>
-                            <label class='w3-half w3-small'>Name</label>
-                            <input class="w3-border w3-input" type='text' name='name'>
-                            <label class='w3-half w3-small'>Type</label>
-                            <input class="w3-border w3-input" type='text' name='types'>
-                            <label class='w3-half w3-small'>Reload Time</label>
-                            <input class="w3-border w3-input" type='text' name='reload_time'>
-                            <label class='w3-half w3-small'>Firing Rate</label>
-                            <input class="w3-border w3-input" type='text' name='firing_rate'>
-                            <label class='w3-half w3-small'>Damage</label>
-                            <input class="w3-border w3-input" type='text' name='damage'>
-                            <br>
+                            {% for weapon in weapon_details[0].keys() %}
+                            {% if weapon == 'equipment.type' %}
+                            <label class='w3-half w3-small'>{{weapon}}</label>
+                            <input class="w3-border w3-input w3-half" type='text' name='types'>
+                            {% elif weapon == 'equipment.serial_no'%}
+                            {{pass}}
 
+                            {% else %}
+                            <label class='w3-half w3-small'>{{weapon}}</label>
+                            <input class="w3-border w3-input w3-half" type='text' name={{weapon}}>
+
+                            {% endif %}
+                            {% endfor %}
+                            <br>
                             <button type="submit" class="w3-button w3-theme w3-center " style='width:100%;'><i class="fa fa-pencil-alt"></i>
                                  Post</button>
                         </form>
@@ -33,34 +33,33 @@
             </div>
         </div>
 
-   
+
     </div>
 
 </div>
-   <br> 
-    <div class="w3-container">
-        <h5>Weapons</h5>
-        <table class="w3-table w3-striped w3-bordered w3-border w3-hoverable w3-white">
-            <thead>
-                {% for weapon in weapon_details[0].keys() %}
-                <th>{{weapon | title}}</th>
+<br>
+<div class="w3-container">
+    <h5>Weapons</h5>
+    <table class="w3-table w3-striped w3-bordered w3-border w3-hoverable w3-white">
+        <thead>
+            {% for weapon in weapon_details[0].keys() %}
+            <th>{{weapon | title}}</th>
+            {% endfor %}
+        </thead>
+        <tbody>
+            {% for weapon in weapon_details %}
+            <tr>
+                {% for detail in weapon.values() %}
+                <td>{{detail}}</td>
                 {% endfor %}
-
-            </thead>
-            <tbody>
-                {% for weapon in weapon_details %}
-                <tr>
-                    {% for detail in weapon.values() %}
-                    <td>{{detail}}</td>
-                    {% endfor %}
-                </tr>
-                {% endfor %}
+            </tr>
+            {% endfor %}
 
 
-            </tbody>
-        </table><br>
-    </div>
-    <hr>
+        </tbody>
+    </table><br>
+</div>
+<hr>
 <div class="w3-container">
     <h5>Armors</h5>
     <table class="w3-table w3-striped w3-bordered w3-border w3-hoverable w3-white">
@@ -84,4 +83,4 @@
     </table><br>
 </div>
 <hr>
-    {% endblock content %}
+{% endblock content %}

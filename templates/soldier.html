@@ -1,0 +1,26 @@
+{% extends 'layout.html' %}
+{% block content %}
+
+<div class="w3-container">
+    <h5>Soldiers</h5>
+    <table class="w3-table w3-striped w3-bordered w3-border w3-hoverable w3-white">
+        <thead>
+            {% for soldier in manager.soldiers_details()[0].keys() %}
+            <th>{{soldier | title}}</th>
+            {% endfor %}
+        </thead>
+        <tbody>
+            {% for soldier in manager.soldiers_details() %}
+            <tr>
+                {% for detail in soldier.values() %}
+                <td>{{detail}}</td>
+                {% endfor %}
+            </tr>
+            {% endfor %}
+
+
+        </tbody>
+    </table><br>
+</div>
+
+{% endblock content %}

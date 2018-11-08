@@ -6,7 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz"
+        crossorigin="anonymous">
     <link rel="stylesheet" href="https://www.w3schools.com/lib/w3-theme-blue-grey.css">
     <style>
         html,
@@ -53,7 +54,10 @@
                 Overview</a>
             <a href={{ url_for('weaponry') }} class="w3-bar-item w3-button w3-padding"><i class="fa fa-crosshairs fa-fw"></i>&nbsp;
                 Weaponry</a>
-            <a href="#" class="w3-bar-item w3-button w3-padding"><i class="fa fa-fighter-jet fa-fw"></i>&nbsp; Officer</a><br><br>
+            <a href={{ url_for('officers') }} class="w3-bar-item w3-button w3-padding"><i class="fa fa-fighter-jet fa-fw"></i>&nbsp; Officers</a>
+            <a href={{ url_for('soldiers') }} class="w3-bar-item w3-button w3-padding"><i class="fa fa-users fa-fw"></i>&nbsp; Soldiers</a>
+            
+            <br><br>
         </div>
     </nav>
 
@@ -85,7 +89,7 @@
                 <div class="w3-container w3-blue w3-padding-16">
                     <div class="w3-left"><i class="fa fa-fighter-jet w3-xxxlarge"></i></div>
                     <div class="w3-right">
-                        <h3>{{officers}}</h3>
+                        <h3>{{officers_count}}</h3>
                     </div>
                     <div class="w3-clear"></div>
                     <h4>Officers</h4>
@@ -105,7 +109,7 @@
                 <div class="w3-container w3-orange w3-text-white w3-padding-16">
                     <div class="w3-left"><i class="fa fa-users w3-xxxlarge"></i></div>
                     <div class="w3-right">
-                        <h3>{{soldiers}}</h3>
+                        <h3>{{soldiers_count}}</h3>
                     </div>
                     <div class="w3-clear"></div>
                     <h4>Soldiers</h4>
@@ -113,13 +117,13 @@
             </div>
         </div>
 
-    {% block content %}
-    {% endblock content %}
-       <!-- Footer -->
-    <footer class="w3-container w3-padding-16 w3-light-grey">
-        <h4>Copyright ©</h4>
-        <p>Made on Flask, W3.CSS and MySQL by <a href="https://www.githbu.com/trevahok/" target="_blank">Trevahok</a></p>
-    </footer>
+        {% block content %}
+        {% endblock content %}
+        <!-- Footer -->
+        <footer class="w3-container w3-padding-16 w3-light-grey">
+            <h4>Copyright ©</h4>
+            <p>Made on Flask, W3.CSS and MySQL by <a href="https://www.github.com/trevahok/" target="_blank">Trevahok</a></p>
+        </footer>
 
         <script>
             // Get the Sidebar
